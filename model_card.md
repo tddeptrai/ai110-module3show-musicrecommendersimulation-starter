@@ -21,16 +21,22 @@ Prompts:
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+The recommender works like a friend who knows your taste and gives every song in the catalog a "how well does this fit you?" score out of 6 points.
 
-Prompts:  
+**What it knows about you.** You tell it five things: your favorite genre (like lofi), the mood you want (like chill), how energetic you want the music to be, how happy or dark you want it to sound, and whether you like acoustic songs.
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
+**What it looks at in each song.** Every song has a genre, a mood, and a few sound measurements between 0 and 1: *energy* (calm to intense), *valence* (dark or sad to bright or happy), and *acousticness* (electronic to acoustic).
 
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+**How it scores a song.**
+- **Same genre as your favorite:** +2 points. This is the biggest reward, because genre says the most about what a song sounds like.
+- **Same mood as you asked for:** +1 point.
+- **Energy:** up to 1.5 points. A song gets the full amount when its energy exactly matches what you want, and fewer points the further away it is. It doesn't reward "more energy" or "less energy," only being close to your target.
+- **Happy or dark feel (valence):** up to 1 point, using the same closeness idea.
+- **Acoustic bonus:** up to 0.5 points if you like acoustic music. The more acoustic the song, the bigger the bonus.
+
+**How it picks songs.** It scores every song, sorts them from highest to lowest, and shows you the top five. Each song comes with a sentence explaining why it was picked, such as "it has the chill mood you're looking for and its energy level is right where you like it." It also points out drawbacks, such as "it's much more intense than you prefer."
+
+**Changes from the starter.** The starter returned the first few songs with no scoring. I added the point system above and the plain-English explanations. I added valence as a user preference because it is the one sound measurement that doesn't just repeat energy. Tempo and danceability are left out of the score because, in this catalog, they rise and fall almost exactly with energy, so counting them would reward the same thing several times.
 
 ---
 
